@@ -12,7 +12,38 @@
 	.spacer{
 		height: 50px;
 	}
+	.grid div{
+		min-height:20px;
+	}
+	.grid label{
+		height:20px;
+		margin-left:15px;
+	}
+
 </style>
+<script type="text/javascript">
+	function secTo(valsec){
+		if(valsec.trim()!=""){
+			var dates=parseInt(valsec*1000);
+
+			if(dates>0){
+				var date = new Date(dates);
+
+				var days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+				var months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+				document.getElementById("local").value=  days[date.getDay()] +" " + months[date.getMonth()] + " " + ("0"+date.getDate()).substr(-2) + " "+date.getFullYear()+" "+ ("0"+date.getHours()).substr(-2) + ":" + ("0"+date.getMinutes()).substr(-2)  + ":" + ("0"+date.getSeconds()).substr(-2);
+
+				document.getElementById("utc").value=  days[date.getUTCDay()] +" " + months[date.getUTCMonth()] + " " + ("0"+date.getUTCDate()).substr(-2) + " "+date.getFullYear()+" "+ ("0"+date.getUTCHours()).substr(-2) + ":" + ("0"+date.getUTCMinutes()).substr(-2)  + ":" + ("0"+date.getUTCSeconds()).substr(-2);
+
+				console.log(date.getDay());
+				return;
+			}
+		}
+		document.getElementById("local").value="";
+		document.getElementById("utc").value="";
+
+	}
+</script>
 </head>
 <body>
 	<div class="container">
@@ -24,24 +55,30 @@
 						<h2 class="mdl-card__title-text">Current Seconds Conversion Utility</h2>
 					</div>
 					<div class="mdl-card__supporting-text">
-						<div class='row'>
+						<div class='row grid'>
 							<div class="col-md-4 col-sm-12">
-								<div class=" mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-									<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="seconds">
-									<label class="mdl-textfield__label" for="seconds">Seconds</label>
+								<label class="mdl-textfield__label" for="seconds">Convert Seconds</label>
+							</div>
+							<div class="col-md-4 col-sm-12">
+								<label class="mdl-textfield__label" for="local">To Local date and Time</label>
+							</div>
+							<div class="col-md-4 col-sm-12">
+								<label class="mdl-textfield__label" for="utc">To UTC date and Time</label>
+							</div>
+							<div class="col-md-4 col-sm-12">
+								<div class=" mdl-textfield mdl-js-textfield">
+									<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" onkeyup ="secTo(this.value)" id="seconds">
 									<span class="mdl-textfield__error">Input is not a number!</span>
 								</div>
 							</div>
 							<div class="col-md-4 col-sm-12">
-								<div class=" mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<div class=" mdl-textfield mdl-js-textfield ">
 									<input class="mdl-textfield__input" type="text" id="local">
-									<label class="mdl-textfield__label" for="local">Local date and Time</label>
 								</div>
 							</div>
 							<div class="col-md-4 col-sm-12">
-								<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<div disabled="true" class="mdl-textfield mdl-js-textfield ">
 									<input class="mdl-textfield__input" type="text" id="utc">
-									<label class="mdl-textfield__label" for="utc">UTC Date and Time</label>
 								</div>
 							</div>
 						</div>
